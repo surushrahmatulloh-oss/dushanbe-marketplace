@@ -13,8 +13,9 @@ services:
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npm install && npx prisma generate && npx prisma db push --accept-data-loss && npx tsx prisma/seed.ts && npx next build
-    startCommand: npx next start -H 0.0.0.0
+    # Build бе DB (то хатои пайвастшавӣ надиҳад). DB дар start.
+    buildCommand: npm install && npx prisma generate && npx next build
+    startCommand: npx prisma db push --accept-data-loss && npx tsx prisma/seed.ts && npx next start -H 0.0.0.0
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
