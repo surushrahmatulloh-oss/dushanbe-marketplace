@@ -3,6 +3,7 @@
 databases:
   - name: dushanbe-db
     plan: free
+    region: oregon
     databaseName: dushanbe
     user: dushanbe
 
@@ -11,9 +12,9 @@ services:
     name: dushanbe-marketplace
     runtime: node
     plan: free
-    region: frankfurt
+    region: oregon
     buildCommand: npm install && npx prisma generate && npx prisma db push --accept-data-loss && npx tsx prisma/seed.ts && npx next build
-    startCommand: npx next start -p $PORT
+    startCommand: npx next start -H 0.0.0.0
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
