@@ -178,6 +178,14 @@ function buildBulkListings(
 }
 
 async function main() {
+  if (process.env.SEED_LIGHT === "1") {
+    const existingUsers = await prisma.user.count();
+    if (existingUsers > 0) {
+      console.log("Seed skipped — база аллакай пур аст");
+      return;
+    }
+  }
+
   const passwordHash = await bcrypt.hash("password123", 12);
 
   const admin = await prisma.user.upsert({
@@ -567,7 +575,10 @@ async function main() {
     }
   }
 
-  const bulkListings = buildBulkListings(createdCategories, allUserIds, shop.id);
+  const bulkListings =
+    process.env.SEED_LIGHT === "1"
+      ? buildBulkListings(createdCategories, allUserIds, shop.id).slice(0, 40)
+      : buildBulkListings(createdCategories, allUserIds, shop.id);
   let bulkCreated = 0;
 
   for (const listing of bulkListings) {

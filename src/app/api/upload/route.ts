@@ -29,8 +29,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Дар Vercel файли системаи навистан нест — data URL истифода мешавад
-    if (process.env.VERCEL) {
+    // Дар Vercel/Render файли системаи навистан нест — data URL
+    if (process.env.VERCEL || process.env.RENDER) {
       const mime = file.type || "image/jpeg";
       const dataUrl = `data:${mime};base64,${buffer.toString("base64")}`;
       return NextResponse.json({ url: dataUrl });

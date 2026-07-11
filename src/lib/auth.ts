@@ -10,6 +10,7 @@ import { isEmailLike, normalizePhone } from "@/lib/phone";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
+  trustHost: true,
   pages: {
     signIn: "/login",
   },

@@ -1,0 +1,28 @@
+# Blueprint барои Render.com — Web Service + PostgreSQL (free)
+
+databases:
+  - name: dushanbe-db
+    plan: free
+    databaseName: dushanbe
+    user: dushanbe
+
+services:
+  - type: web
+    name: dushanbe-marketplace
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install --include=dev && npx prisma generate && npx prisma db push --accept-data-loss && npm run build
+    startCommand: npx tsx prisma/seed.ts && npm run start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "20.18.0"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dushanbe-db
+          property: connectionString
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: SEED_LIGHT
+        value: "1"

@@ -1,0 +1,12 @@
+# Локал — SQLite (барои барқароркунӣ агар лозим шавад)
+# Нусхабардорӣ: copy schema.sqlite.prisma schema.prisma
+# DATABASE_URL="file:./dev.db"
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
