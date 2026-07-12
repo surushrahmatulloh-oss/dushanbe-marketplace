@@ -13,9 +13,9 @@ services:
     runtime: node
     plan: free
     region: oregon
-    # Build бе DB (то хатои пайвастшавӣ надиҳад). DB дар start.
+    # Build бе DB. Migrate/seed дар start — seed хато диҳад ҳам, next start мешавад.
     buildCommand: npm install && npx prisma generate && npx next build
-    startCommand: npx prisma db push --accept-data-loss && npx tsx prisma/seed.ts && npx next start -H 0.0.0.0
+    startCommand: npx prisma db push --accept-data-loss; npx tsx prisma/seed.ts; npx next start -H 0.0.0.0 -p ${PORT:-10000}
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
@@ -28,5 +28,7 @@ services:
           property: connectionString
       - key: AUTH_SECRET
         generateValue: true
+      - key: AUTH_TRUST_HOST
+        value: "true"
       - key: SEED_LIGHT
         value: "1"
