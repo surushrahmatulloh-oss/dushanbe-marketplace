@@ -11,7 +11,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "postinstall": "prisma generate",
-    "render:build": "prisma generate && prisma db push --accept-data-loss && next build"
+    "render:build": "prisma generate && next build",
+    "render:start": "node scripts/render-start.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
