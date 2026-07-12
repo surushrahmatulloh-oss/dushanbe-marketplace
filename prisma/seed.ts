@@ -15,8 +15,26 @@ import {
   randomInt,
   randomPrice,
 } from "./listings-bulk";
+import { TOP_CATEGORIES } from "../src/lib/categories";
 
 const prisma = new PrismaClient();
+
+async function syncTopCategories() {
+  const createdCategories: Record<string, string> = {};
+  for (const cat of TOP_CATEGORIES) {
+    const created = await prisma.category.upsert({
+      where: { slug: cat.slug },
+      update: { name: cat.name, icon: cat.icon },
+      create: {
+        name: cat.name,
+        slug: cat.slug,
+        icon: cat.icon,
+      },
+    });
+    createdCategories[cat.slug] = created.id;
+  }
+  return createdCategories;
+}
 
 type ListingInput = {
   title: string;
@@ -178,10 +196,14 @@ function buildBulkListings(
 }
 
 async function main() {
+  // Always keep the Somon-style top-level directory in sync
+  const createdCategories = await syncTopCategories();
+  console.log(`Categories synced: ${Object.keys(createdCategories).length}`);
+
   if (process.env.SEED_LIGHT === "1") {
     const existingUsers = await prisma.user.count();
     if (existingUsers > 0) {
-      console.log("Seed skipped — база аллакай пур аст");
+      console.log("Seed skipped — база аллакай пур аст (категорияҳо нав шуд)");
       return;
     }
   }
@@ -246,27 +268,6 @@ async function main() {
       },
     });
     allUserIds.push(created.id);
-  }
-
-  const categories = [
-    { name: "Мошинҳо", slug: "moshin", icon: "car" },
-    { name: "Хонаҳо", slug: "khona", icon: "home" },
-    { name: "Телефонҳо", slug: "telefon", icon: "smartphone" },
-    { name: "Либос", slug: "libos", icon: "shirt" },
-    { name: "Кор", slug: "kor", icon: "briefcase" },
-    { name: "Мебел", slug: "mebel", icon: "sofa" },
-    { name: "Кӯдакона", slug: "kudakona", icon: "baby" },
-    { name: "Хизматрасонӣ", slug: "khizmat", icon: "wrench" },
-  ];
-
-  const createdCategories: Record<string, string> = {};
-  for (const cat of categories) {
-    const created = await prisma.category.upsert({
-      where: { slug: cat.slug },
-      update: {},
-      create: cat,
-    });
-    createdCategories[cat.slug] = created.id;
   }
 
   const subcategories = [
