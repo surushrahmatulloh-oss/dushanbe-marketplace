@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CartButton } from "@/components/cart/cart-button";
 import { NotificationsBell } from "@/components/notifications/notifications-bell";
-import { cn } from "@/lib/utils";
+import { BrandLogo } from "@/components/layout/brand-logo";
 
 export function Header() {
   const { data: session } = useSession();
@@ -17,24 +17,7 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/40">
       <div className="container mx-auto px-4">
         <div className="flex h-14 items-center justify-between gap-3">
-          <Link
-            href="/"
-            className="group flex items-center gap-2 shrink-0 transition-transform duration-200 hover:scale-[1.03]"
-          >
-            <div
-              className={cn(
-                "flex h-8 w-8 items-center justify-center rounded-[10px]",
-                "bg-gradient-to-br from-teal-800 via-primary to-teal-400",
-                "text-white font-bold text-lg leading-none shadow-sm"
-              )}
-            >
-              D
-            </div>
-            <span className="hidden sm:block text-sm md:text-base font-bold tracking-tight">
-              <span className="text-neutral-900">Dushanbe</span>
-              <span className="text-primary">Маркетплейс</span>
-            </span>
-          </Link>
+          <BrandLogo />
 
           <nav className="hidden lg:flex items-center gap-1">
             <Link href="/categories">

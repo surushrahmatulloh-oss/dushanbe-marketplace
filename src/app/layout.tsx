@@ -13,16 +13,18 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Dushanbe Маркетплейс",
-    template: "%s | Dushanbe Маркетплейс",
+    default: "Bozor.tj — Dushanbe Маркетплейс",
+    template: "%s | Bozor.tj",
   },
   description:
     "Платформаи маркетплейс барои хариду фурӯш дар Душанбе. Эълонҳои шахсӣ ва мағозаҳои онлайн.",
-  keywords: ["маркетплейс", "эълон", "харид", "фурӯш", "Тоҷикистон", "Душанбе"],
+  keywords: ["Bozor.tj", "маркетплейс", "эълон", "харид", "фурӯш", "Тоҷикистон", "Душанбе"],
   manifest: "/manifest.json",
-  appleWebApp: { capable: true, title: "DushanbeMarket" },
+  themeColor: "#0F6E56",
+  appleWebApp: { capable: true, title: "Bozor.tj", statusBarStyle: "default" },
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },

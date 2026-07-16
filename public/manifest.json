@@ -1,11 +1,11 @@
 {
-  "name": "Dushanbe Маркетплейс",
-  "short_name": "DushanbeMarket",
+  "name": "Bozor.tj — Dushanbe Маркетплейс",
+  "short_name": "Bozor.tj",
   "description": "Маркетплейси хариду фурӯш дар Душанбе",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fafaf9",
-  "theme_color": "#0f766e",
+  "background_color": "#639922",
+  "theme_color": "#0F6E56",
   "orientation": "portrait-primary",
   "icons": [
     {
